@@ -7,9 +7,6 @@ const nextConfig: NextConfig = {
   // 优化输出
   output: 'standalone',
 
-  // 部分预渲染
-  // ppr: 'incremental',
-
   // 允许从这些远程域加载图片，供 <Image> 使用
   // 如果使用的模型返回的图片域不同，需要在此添加相应域名
   images: {
