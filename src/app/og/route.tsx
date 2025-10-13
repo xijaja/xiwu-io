@@ -8,24 +8,24 @@ export async function GET(req: Request) {
   const title = searchParams.get("title") ?? "My Blog";
 
   return new ImageResponse(
-    (
-      <div
-        style={{
-          height: "100%",
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-start",
-          justifyContent: "flex-end",
-          background: "linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%)",
-          color: "#fff",
-          padding: 64,
-        }}
-      >
-        <div style={{ fontSize: 64, fontWeight: 800, lineHeight: 1.2 }}>{title}</div>
-        <div style={{ fontSize: 28, opacity: 0.9, marginTop: 16 }}>newblog</div>
+    <div
+      style={{
+        height: "100%",
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-start",
+        justifyContent: "flex-end",
+        background: "linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%)",
+        color: "#fff",
+        padding: 64,
+      }}
+    >
+      <div style={{ fontSize: 64, fontWeight: 800, lineHeight: 1.2 }}>
+        {title}
       </div>
-    ),
+      <div style={{ fontSize: 28, opacity: 0.9, marginTop: 16 }}>newblog</div>
+    </div>,
     {
       width: 1200,
       height: 630,

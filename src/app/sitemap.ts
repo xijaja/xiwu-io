@@ -1,7 +1,7 @@
-import type { MetadataRoute } from "next";
-import path from "path";
 import { readdir, readFile } from "fs/promises";
 import matter from "gray-matter";
+import type { MetadataRoute } from "next";
+import path from "path";
 import { SITE_URL } from "@/lib/config";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -19,7 +19,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       const source = await readFile(path.join(blogDir, f), "utf8");
       const { data } = matter(source);
       if (data?.draft === true) continue;
-      const fmSlug = typeof data?.slug === 'string' && data.slug.trim().length > 0 ? data.slug : undefined;
+      const fmSlug =
+        typeof data?.slug === "string" && data.slug.trim().length > 0
+          ? data.slug
+          : undefined;
       const slug = fmSlug ?? f.replace(/\.mdx$/, "");
       blogRoutes.push("/blog/" + slug);
     }
@@ -31,7 +34,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // 静态路由
   for (const route of staticRoutes) {
-    entries.push({ url: new URL(route, baseUrl).toString(), lastModified: new Date() });
+    entries.push({
+      url: new URL(route, baseUrl).toString(),
+      lastModified: new Date(),
+    });
   }
 
   // 博客路由，若 frontmatter 有 date 则使用
@@ -43,8 +49,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       const source = await readFile(filePath, "utf8");
       const { data } = matter(source);
       if (data?.date) lastModified = new Date(data.date);
-    } catch { }
-    entries.push({ url: new URL(route, baseUrl).toString(), lastModified: lastModified ?? new Date() });
+    } catch {}
+    entries.push({
+      url: new URL(route, baseUrl).toString(),
+      lastModified: lastModified ?? new Date(),
+    });
   }
 
   return entries;

@@ -12,5 +12,7 @@ Allow: /
 # Disallow sensitive paths if any, e.g.:
 # Disallow: /admin
 `;
-  return new NextResponse(body, { headers: { "Content-Type": "text/plain; charset=utf-8" } });
+  return new NextResponse(body, {
+    headers: { "Content-Type": "text/plain; charset=utf-8" },
+  });
 }
