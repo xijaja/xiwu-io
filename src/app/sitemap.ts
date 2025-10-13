@@ -8,7 +8,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = SITE_URL;
 
   // 静态路由：保持精简，避免过期条目
-  const staticRoutes = ["/", "/about", "/blog"];
+  const staticRoutes = ["/", "/zh", "/about", "/zh/about", "/blog", "/zh/blog"];
 
   const blogDir = path.join(process.cwd(), "src", "content", "blogs");
   let blogRoutes: string[] = [];
