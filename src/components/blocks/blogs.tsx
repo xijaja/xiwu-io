@@ -33,8 +33,8 @@ export default async function Blogs() {
       <ul className="space-y-6">
         {blogs.map((blog) => (
           <li key={blog.slug}>
-            <Link href={`/blog/${blog.slug}`}>
-              <h3 className="text-lg font-medium mb-1">{blog.title}</h3>
+            <Link href={`/blog/${blog.slug}`} className="[&:hover_h3]:underline [&:hover_h3]:text-foreground/80">
+              <h3 className="text-lg font-medium mb-1 underline-offset-4 decoration-1 decoration-wavy">{blog.title}</h3>
               <p className="text-sm text-muted-foreground">
                 {blog.date ? ` ${formatDate(locale, blog.date)} / ` : ""}
                 {blog.description}

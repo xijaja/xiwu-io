@@ -42,8 +42,8 @@ export default async function Projects() {
       <ul className="space-y-6">
         {projects.map((project) => (
           <li key={project.id}>
-            <Link target="_blank" rel="noopener" href={project.url}>
-              <h3 className="text-lg font-medium mb-1">{project.title}</h3>
+            <Link target="_blank" rel="noopener" href={project.url} className="[&:hover_h3]:underline [&:hover_h3]:text-foreground/80">
+              <h3 className="text-lg font-medium mb-1 underline-offset-4 decoration-1 decoration-double">{project.title}</h3>
               <p className="text-sm text-muted-foreground">
                 {project.publisDate ? ` ${formatDate(locale, project.publisDate)} / ` : ""}
                 {project.description}

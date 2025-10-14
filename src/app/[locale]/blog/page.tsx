@@ -5,6 +5,7 @@ import path from "path";
 import { routing } from "@/i18n/routing";
 import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
+import { setRequestLocale } from "next-intl/server";
 
 // 静态列表页：若误用了动态 API 则直接报错
 export const dynamic = "error";
@@ -48,6 +49,8 @@ export default async function BlogListPage({ params }: Props) {
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
+  // 设置请求语言
+  setRequestLocale(locale);
   // 获取文章列表
   const posts = await getPosts(locale);
 

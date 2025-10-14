@@ -20,7 +20,7 @@ const localeText: Record<string, LocalizedText> = {
   },
   description_3: {
     en: "Harnessing AI to innovate, allied with machine intelligence to build. This is my path to creating independent products.",
-    zh: "假天工以开物，引智械为同袍，铸以独立之器，此吾道之所向也。",
+    zh: "假天工以开物，引智械为同袍，铸就独立产品，此吾道之所向也。",
   },
 };
 

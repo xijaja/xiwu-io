@@ -9,6 +9,7 @@ import { hasLocale } from "next-intl";
 import { Link, routing } from "@/i18n/routing";
 import { formatDate } from "@/lib/utils";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { setRequestLocale } from "next-intl/server";
 
 // 强制静态化：若页面内使用了动态 API（cookies、headers 等）则直接报错
 export const dynamic = "error";
@@ -121,6 +122,8 @@ export default async function BlogPage({ params }: Props) {
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
+  // 设置请求语言
+  setRequestLocale(locale);
 
   // 根据 slug 或文件名获取文件路经
   const filePath = await resolveFilePathBySlug(locale, slug);
