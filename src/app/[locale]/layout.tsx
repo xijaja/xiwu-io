@@ -7,6 +7,7 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { notFound } from "next/navigation";
+import Navbar from "@/components/blocks/navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -137,6 +138,7 @@ export default async function RootLayout({ children, params }: Readonly<Props>) 
 
         <NextIntlClientProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <Navbar />
             {children}
           </ThemeProvider>
         </NextIntlClientProvider>

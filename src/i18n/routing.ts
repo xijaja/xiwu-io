@@ -13,8 +13,8 @@ export const LOCALE_NAMES: Record<string, string> = {
 
 // 本地化文本
 export interface LocalizedText {
-  zh: string;
   en: string;
+  zh: string;
 }
 
 // 类型安全的获取本地化文本的函数

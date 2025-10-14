@@ -1,7 +1,6 @@
 import Blogs from "@/components/blocks/blogs";
 import Footer from "@/components/blocks/footer";
 import Hero from "@/components/blocks/hero";
-import Navbar from "@/components/blocks/navbar";
 import Projects from "@/components/blocks/projects";
 import Stack from "@/components/blocks/stack";
 
@@ -12,18 +11,12 @@ export async function generateStaticParams() {
 
 export default function HomePage() {
   return (
-    <div className="font-roboto-mono">
-      <div className="min-h-screen w-full relative">
-        {/* Global grid background is now handled by body::before in globals.css */}
-        <Navbar />
-        <main className="max-w-4xl mx-auto px-6 py-16 flex flex-col gap-20">
-          <Hero />
-          <Projects />
-          <Blogs />
-          <Stack />
-          <Footer />
-        </main>
-      </div>
-    </div>
+    <main className="font-roboto-mono max-w-4xl mx-auto px-6 py-16 flex flex-col gap-20">
+      <Hero />
+      <Projects />
+      <Blogs />
+      <Stack />
+      <Footer />
+    </main>
   );
 }
