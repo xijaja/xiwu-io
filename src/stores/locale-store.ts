@@ -1,12 +1,12 @@
-import Cookies from 'js-cookie';
-import { create } from 'zustand';
+import Cookies from "js-cookie";
+import { create } from "zustand";
 
 // 本地化状态
 interface LocaleState {
-  showLanguageAlert: boolean // 是否显示语言提示
-  setShowLanguageAlert: (show: boolean) => void // 设置是否显示语言提示
-  dismissLanguageAlert: () => void // 隐藏语言提示
-  getLangAlertDismissed: () => boolean // 检查是否已关闭提示
+  showLanguageAlert: boolean; // 是否显示语言提示
+  setShowLanguageAlert: (show: boolean) => void; // 设置是否显示语言提示
+  dismissLanguageAlert: () => void; // 隐藏语言提示
+  getLangAlertDismissed: () => boolean; // 检查是否已关闭提示
 }
 
 export const useLocaleStore = create<LocaleState>((set) => ({
@@ -20,4 +20,4 @@ export const useLocaleStore = create<LocaleState>((set) => ({
   getLangAlertDismissed: () => {
     return Cookies.get("langAlertDismissed") === "true";
   },
-}))
+}));

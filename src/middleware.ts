@@ -1,5 +1,5 @@
-import createMiddleware from 'next-intl/middleware';
-import { routing } from './i18n/routing';
+import createMiddleware from "next-intl/middleware";
+import { routing } from "./i18n/routing";
 
 export default createMiddleware(routing);
 
@@ -11,14 +11,14 @@ export const config = {
 
   matcher: [
     // 重定向到匹配的语言
-    '/',
+    "/",
 
     // 设置 cookie 来记住之前的语言
     // 所有请求都有语言前缀
-    '/(en|zh)/:path*',
+    "/(en|zh)/:path*",
 
     // 重定向到添加缺失的语言
     // (e.g. `/pathnames` -> `/en/pathnames`)
-    '/((?!api|_next|_vercel|.*\\.|favicon.ico).*)'
-  ]
+    "/((?!api|_next|_vercel|.*\\.|favicon.ico).*)",
+  ],
 };
