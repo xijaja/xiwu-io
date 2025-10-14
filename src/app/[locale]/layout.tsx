@@ -8,6 +8,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/blocks/navbar";
+import { TailwindIndicator } from "@/components/tailwind-indicator";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -109,7 +110,8 @@ export default async function RootLayout({ children, params }: Readonly<Props>) 
           aria-hidden="true"
           className="fixed inset-0 z-[-1] pointer-events-none dark:hidden"
           style={{
-            backgroundImage: "linear-gradient(to right, #e7e5e4 1px, transparent 1px), linear-gradient(to bottom, #e7e5e4 1px, transparent 1px)",
+            backgroundImage:
+              "linear-gradient(to right, #e7e5e4 1px, transparent 1px), linear-gradient(to bottom, #e7e5e4 1px, transparent 1px)",
             backgroundSize: "20px 20px",
             backgroundPosition: "0 0, 0 0",
             WebkitMaskImage:
@@ -124,7 +126,8 @@ export default async function RootLayout({ children, params }: Readonly<Props>) 
           aria-hidden="true"
           className="fixed inset-0 z-[-1] pointer-events-none hidden dark:block"
           style={{
-            backgroundImage: "linear-gradient(to right, rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.06) 1px, transparent 1px)",
+            backgroundImage:
+              "linear-gradient(to right, rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.06) 1px, transparent 1px)",
             backgroundSize: "20px 20px",
             backgroundPosition: "0 0, 0 0",
             WebkitMaskImage:
@@ -142,6 +145,7 @@ export default async function RootLayout({ children, params }: Readonly<Props>) 
             {children}
           </ThemeProvider>
         </NextIntlClientProvider>
+        <TailwindIndicator />
       </body>
     </html>
   );

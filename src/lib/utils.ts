@@ -5,7 +5,6 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-
 // 格式化日期
 export function formatDate(locale: string, date: string) {
   // 如果 locale 是 zh，则返回中文日期，例如：2025年1月1日

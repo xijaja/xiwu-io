@@ -31,7 +31,9 @@ export default async function Hero() {
     <section>
       <h1 className="text-4xl font-mono font-bold mb-6 flex items-center gap-3 flex-wrap">
         {getLocalizedText(localeText.title, locale)}
-        <span className="bg-foreground text-background text-base px-2 py-0.5">{getLocalizedText(localeText.tag, locale)}</span>
+        <span className="bg-foreground text-background text-base px-2 py-0.5">
+          {getLocalizedText(localeText.tag, locale)}
+        </span>
       </h1>
       <div className="space-y-4 text-foreground/90 leading-relaxed max-w-2xl">
         <p>{getLocalizedText(localeText.description_1, locale)}</p>

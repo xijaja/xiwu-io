@@ -18,10 +18,7 @@ export interface LocalizedText {
 }
 
 // 类型安全的获取本地化文本的函数
-export const getLocalizedText = (
-  text: LocalizedText,
-  locale: Locale
-): string => {
+export const getLocalizedText = (text: LocalizedText, locale: Locale): string => {
   return text[locale as keyof typeof text];
 };
 
@@ -40,6 +37,5 @@ export const routing = defineRouting({
 });
 
 // 围绕 Next.js 导航API的轻量级包装器，考虑路由配置
-export const { Link, redirect, usePathname, useRouter, getPathname } =
-  createNavigation(routing);
+export const { Link, redirect, usePathname, useRouter, getPathname } = createNavigation(routing);
 export type Locale = (typeof routing.locales)[number];

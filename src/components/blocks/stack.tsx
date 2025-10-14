@@ -11,6 +11,7 @@ import {
   SiCloudflare,
   SiVercel,
   SiReplicate,
+  SiShadcnui,
 } from "@icons-pack/react-simple-icons";
 import React from "react";
 import Image from "next/image";
@@ -25,6 +26,7 @@ const stackList: stack[] = [
   { name: "Figma", icon: <SiFigma /> },
   { name: "Xmind", icon: <Xmind /> },
   { name: "Next.js", icon: <SiNextdotjs /> },
+  { name: "ShadcnUI", icon: <SiShadcnui /> },
   { name: "Notion", icon: <SiNotion /> },
   { name: "Cursor", icon: <Cursor /> },
   { name: "Github", icon: <SiGithub /> },
@@ -42,11 +44,11 @@ export default function Stack() {
   return (
     <section>
       <h2 className="text-2xl font-roboto-mono font-bold mb-8">Stack_</h2>
-      <ul className="grid grid-cols-5 gap-3">
+      <ul className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {stackList.map((stack) => (
           <li key={stack.name}>
             <div className="flex items-center gap-3">
-              <div className="w-5 h-5 text-[#000000] dark:text-white">{stack.icon}</div>
+              <div className="w-6 h-6 text-[#000000] dark:text-white">{stack.icon}</div>
               <span>{stack.name}</span>
             </div>
           </li>

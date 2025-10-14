@@ -8,21 +8,21 @@ export default function Footer() {
   return (
     <footer>
       <div className="text-sm flex items-center gap-4">
-        <Link href="https://xiwu.io/rss.xml" className="flex items-center gap-2">
+        <Link href="/rss" className="flex items-center gap-2">
           <Rss className="w-4 h-4" />
           <span>RSS</span>
         </Link>
         <Link href="https://github.com/xijaja" target="_blank" className="flex items-center gap-2">
           <SiGithub className="w-4 h-4" />
-          <span>GitHub</span>
+          <span>@xijaja</span>
         </Link>
         <Link href="https://x.com/xijaja" target="_blank" className="flex items-center gap-2">
           <SiX className="w-4 h-4" />
-          <span>X</span>
+          <span>@xijaja</span>
         </Link>
         <Link href="https://space.bilibili.com/266752107" target="_blank" className="flex items-center gap-2">
           <SiBilibili className="w-4 h-4" />
-          <span>Bilibili</span>
+          <span>@希嘉嘉</span>
         </Link>
       </div>
       <div className="text-sm mt-4">

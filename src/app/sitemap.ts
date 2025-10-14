@@ -19,10 +19,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       const source = await readFile(path.join(blogDir, f), "utf8");
       const { data } = matter(source);
       if (data?.draft === true) continue;
-      const fmSlug =
-        typeof data?.slug === "string" && data.slug.trim().length > 0
-          ? data.slug
-          : undefined;
+      const fmSlug = typeof data?.slug === "string" && data.slug.trim().length > 0 ? data.slug : undefined;
       const slug = fmSlug ?? f.replace(/\.mdx$/, "");
       blogRoutes.push("/blog/" + slug);
     }

@@ -100,7 +100,7 @@ export default async function BlogPage({ params }: Props) {
     dateModified: data?.updated ?? data?.date ?? undefined,
     description: data?.description ?? undefined,
     image:
-      data?.cover ?? data?.image
+      (data?.cover ?? data?.image)
         ? String(data?.cover ?? data?.image).startsWith("http")
           ? String(data?.cover ?? data?.image)
           : `${SITE_URL}${String(data?.cover ?? data?.image)}`
@@ -118,7 +118,11 @@ export default async function BlogPage({ params }: Props) {
       <div className="prose">
         <MDXRemote components={components} source={content} />
       </div>
-      <script dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} suppressHydrationWarning type="application/ld+json" />
+      <script
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        suppressHydrationWarning
+        type="application/ld+json"
+      />
     </section>
   );
 }

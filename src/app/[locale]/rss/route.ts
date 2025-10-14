@@ -1,7 +1,3 @@
-// RSS 订阅源（RSS 2.0）：供阅读器与聚合服务订阅博客更新
-// - 过滤 draft:true 的文章
-// - 路由优先使用 frontmatter.slug，其次文件名
-
 import { readdir, readFile } from "fs/promises";
 import matter from "gray-matter";
 import { NextResponse } from "next/server";
@@ -26,10 +22,7 @@ export async function GET() {
     const source = await readFile(path.join(blogDir, f), "utf8");
     const { data } = matter(source);
     if (data?.draft === true) continue;
-    const fmSlug =
-      typeof data?.slug === "string" && data.slug.trim().length > 0
-        ? data.slug
-        : undefined;
+    const fmSlug = typeof data?.slug === "string" && data.slug.trim().length > 0 ? data.slug : undefined;
     const slug = fmSlug ?? f.replace(/\.mdx$/, "");
     items.push({
       slug,
@@ -40,10 +33,7 @@ export async function GET() {
   }
 
   const feedItems = items
-    .sort(
-      (a, b) =>
-        new Date(b.date ?? 0).getTime() - new Date(a.date ?? 0).getTime()
-    )
+    .sort((a, b) => new Date(b.date ?? 0).getTime() - new Date(a.date ?? 0).getTime())
     .map(
       (i) => `
       <item>
@@ -56,8 +46,7 @@ export async function GET() {
     )
     .join("");
 
-  const xml = `<?xml version="1.0" encoding="UTF-8" ?>
-  <rss version="2.0">
+  const xml = `<rss version="2.0">
     <channel>
       <title><![CDATA[${title}]]></title>
       <link>${site}</link>

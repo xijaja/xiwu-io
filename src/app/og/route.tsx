@@ -21,9 +21,7 @@ export async function GET(req: Request) {
         padding: 64,
       }}
     >
-      <div style={{ fontSize: 64, fontWeight: 800, lineHeight: 1.2 }}>
-        {title}
-      </div>
+      <div style={{ fontSize: 64, fontWeight: 800, lineHeight: 1.2 }}>{title}</div>
       <div style={{ fontSize: 28, opacity: 0.9, marginTop: 16 }}>newblog</div>
     </div>,
     {
