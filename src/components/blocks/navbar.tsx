@@ -1,7 +1,8 @@
-import ThemeToggle from "../theme-toggle";
 import LocaleToggle from "../locale-toggle";
 import { Link } from "@/i18n/routing";
 import Image from "next/image";
+import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
+import { buttonVariants } from "../ui/button";
 
 export default function Navbar() {
   return (
@@ -13,7 +14,7 @@ export default function Navbar() {
           <Image src="/xiwu-logo-dark.png" alt="xiwu" className="hidden dark:block h-8 w-auto" width={100} height={100} />
         </Link>
         <div className="flex items-center gap-6 text-sm">
-          <ThemeToggle />
+          <AnimatedThemeToggler className={buttonVariants({ variant: "outline", size: "icon", className: "size-8 border-none" })} />
           <LocaleToggle />
         </div>
       </div>

@@ -1,5 +1,6 @@
 import { Link } from "@/i18n/routing";
-import { Link2, Rss, Twitter, Tv } from "lucide-react";
+import { Rss } from "lucide-react";
+import { SiBilibili, SiX, SiGithub } from "@icons-pack/react-simple-icons";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -12,21 +13,20 @@ export default function Footer() {
           <span>RSS</span>
         </Link>
         <Link href="https://github.com/xijaja" target="_blank" className="flex items-center gap-2">
-          <Link2 className="w-4 h-4" />
+          <SiGithub className="w-4 h-4" />
           <span>GitHub</span>
         </Link>
         <Link href="https://x.com/xijaja" target="_blank" className="flex items-center gap-2">
-          <Twitter className="w-4 h-4" />
+          <SiX className="w-4 h-4" />
           <span>X</span>
         </Link>
         <Link href="https://space.bilibili.com/266752107" target="_blank" className="flex items-center gap-2">
-          <Tv className="w-4 h-4" />
+          <SiBilibili className="w-4 h-4" />
           <span>Bilibili</span>
         </Link>
       </div>
       <div className="text-sm mt-4">
         <span className="text-lg">&copy;</span> {currentYear} xiwu.io
-        <p>和而不同，卓尔不群</p>
       </div>
     </footer>
   );
