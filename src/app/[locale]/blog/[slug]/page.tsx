@@ -146,6 +146,9 @@ export default async function BlogPage({ params }: Props) {
   //   p: (props: React.HTMLAttributes<HTMLParagraphElement>) => <p className="mb-4" {...props} />,
   // };
 
+  // 获取页面 slug（与 generateMetadata 中的逻辑保持一致）
+  const pageSlug = typeof data?.slug === "string" && data.slug.trim().length > 0 ? String(data.slug) : slug;
+
   // 结构化数据（JSON-LD）：BlogPosting，用于搜索引擎理解页面
   const jsonLd = {
     "@context": "https://schema.org",
@@ -159,8 +162,8 @@ export default async function BlogPage({ params }: Props) {
         ? String(data?.cover ?? data?.image).startsWith("http")
           ? String(data?.cover ?? data?.image)
           : `${SITE_URL}${String(data?.cover ?? data?.image)}`
-        : `${SITE_URL}/og?title=${encodeURIComponent(data?.title ?? slug)}`,
-    url: `${SITE_URL}/blog/${slug}`,
+        : `${SITE_URL}/og/${locale}-${pageSlug}.png`,
+    url: `${SITE_URL}/blog/${pageSlug}`,
     author: {
       "@type": "Person",
       name: data?.author ?? SITE_NAME,
@@ -237,7 +240,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const updated = data?.updated ? new Date(data.updated) : undefined;
   const tags: string[] | undefined = Array.isArray(data?.tags) ? data?.tags : undefined;
   const authors = data?.author ? [{ name: String(data.author) }] : undefined;
-  const images = data?.image ? [{ url: String(data.image) }] : undefined;
+  // 优先使用自定义图片，否则使用静态生成的 OG 图片
+  const customImage = data?.image ? String(data.image) : undefined;
+  const staticOGImage = `/og/${locale}-${pageSlug}.png`;
+  const imageUrl = customImage ? (customImage.startsWith("http") ? customImage : `${SITE_URL}${customImage}`) : `${SITE_URL}${staticOGImage}`;
+
+  const images = [{ url: imageUrl }];
 
   return {
     title: `${title} | ${SITE_NAME}`,

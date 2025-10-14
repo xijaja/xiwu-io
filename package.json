@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
+    "build": "pnpm generate:og && next build --turbopack",
+    "build:next": "next build --turbopack",
+    "generate:og": "node scripts/generate-og-images.mjs",
     "start": "next start",
     "lint": "biome check",
     "format": "biome format --write"
@@ -17,6 +19,7 @@
     "@next/mdx": "^15.5.5",
     "@radix-ui/react-slot": "^1.2.3",
     "@types/js-cookie": "^3.0.6",
+    "@vercel/og": "^0.8.5",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cobe": "^0.6.5",
@@ -31,6 +34,7 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "tailwind-merge": "^3.3.1",
+    "tsx": "^4.20.6",
     "zustand": "^5.0.8"
   },
   "devDependencies": {
