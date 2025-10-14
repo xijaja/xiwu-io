@@ -37,12 +37,7 @@ export default function LocaleToggle() {
   }
 
   return (
-    <Button
-      variant="outline"
-      size="icon"
-      className="size-8 border-none"
-      onClick={() => onToggle(currentLocale === "en" ? "zh" : "en")}
-    >
+    <Button variant="ghost" size="icon" className="size-8 border-none" onClick={() => onToggle(currentLocale === "en" ? "zh" : "en")}>
       <Languages />
     </Button>
   );

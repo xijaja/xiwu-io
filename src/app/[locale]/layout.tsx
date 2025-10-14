@@ -1,6 +1,6 @@
 import "@/app/globals.css";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Tomorrow, Roboto, Roboto_Mono } from "next/font/google";
+import { Borel, Geist, Geist_Mono, Roboto_Mono, Rubik_Microbe } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import { SITE_DESC, SITE_NAME, SITE_URL } from "@/lib/config";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
@@ -23,6 +23,19 @@ const geistMono = Geist_Mono({
 const robotoMono = Roboto_Mono({
   subsets: ["latin"], // 加载 Latin 子集
   variable: "--font-roboto-mono", // 可选：设置 CSS 变量
+});
+
+// 博尔字体, 用于标题和logo
+const borel = Borel({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-borel",
+});
+
+const rubikMicrobe = Rubik_Microbe({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-rubik-microbe",
 });
 
 // export const metadata: Metadata = {
@@ -104,14 +117,13 @@ export default async function RootLayout({ children, params }: Readonly<Props>) 
 
   return (
     <html lang={locale || "en"} suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} ${robotoMono.variable} antialiased`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${robotoMono.variable} ${borel.variable} ${rubikMicrobe.variable} antialiased`}>
         {/* 固定网格背景层 */}
         <div
           aria-hidden="true"
           className="fixed inset-0 z-[-1] pointer-events-none dark:hidden"
           style={{
-            backgroundImage:
-              "linear-gradient(to right, #e7e5e4 1px, transparent 1px), linear-gradient(to bottom, #e7e5e4 1px, transparent 1px)",
+            backgroundImage: "linear-gradient(to right, #e7e5e4 1px, transparent 1px), linear-gradient(to bottom, #e7e5e4 1px, transparent 1px)",
             backgroundSize: "20px 20px",
             backgroundPosition: "0 0, 0 0",
             WebkitMaskImage:
@@ -126,8 +138,7 @@ export default async function RootLayout({ children, params }: Readonly<Props>) 
           aria-hidden="true"
           className="fixed inset-0 z-[-1] pointer-events-none hidden dark:block"
           style={{
-            backgroundImage:
-              "linear-gradient(to right, rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.06) 1px, transparent 1px)",
+            backgroundImage: "linear-gradient(to right, rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.06) 1px, transparent 1px)",
             backgroundSize: "20px 20px",
             backgroundPosition: "0 0, 0 0",
             WebkitMaskImage:

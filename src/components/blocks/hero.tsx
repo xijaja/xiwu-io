@@ -4,11 +4,11 @@ import { getLocale } from "next-intl/server";
 const localeText: Record<string, LocalizedText> = {
   title: {
     en: "xiwu",
-    zh: "xiwu",
+    zh: "習武",
   },
   tag: {
-    en: "PM / Founder / Full-stack_",
-    zh: "产品经理 / 创始人 / 全栈开发者_",
+    en: "PM / Founder / Fullstack_",
+    zh: "产品经理 / 创始人 / 开发者_",
   },
   description_1: {
     en: "Eight years in product management have only deepened my commitment to independent thought.",
@@ -30,10 +30,8 @@ export default async function Hero() {
   return (
     <section>
       <h1 className="text-4xl font-mono font-bold mb-6 flex items-center gap-3 flex-wrap">
-        {getLocalizedText(localeText.title, locale)}
-        <span className="bg-foreground text-background text-base px-2 py-0.5">
-          {getLocalizedText(localeText.tag, locale)}
-        </span>
+        <span className="font-rubik-microbe">{getLocalizedText(localeText.title, locale)}</span>
+        <span className="bg-foreground text-background text-base px-2 py-0.5">{getLocalizedText(localeText.tag, locale)}</span>
       </h1>
       <div className="space-y-4 text-foreground/90 leading-relaxed max-w-2xl">
         <p>{getLocalizedText(localeText.description_1, locale)}</p>

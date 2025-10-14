@@ -11,7 +11,7 @@ export async function generateStaticParams() {
 
 export default function HomePage() {
   return (
-    <main className="font-roboto-mono max-w-4xl mx-auto px-6 py-16 flex flex-col gap-20">
+    <main className="max-w-4xl mx-auto px-6 pt-16 flex flex-col gap-16 font-roboto-mono">
       <Hero />
       <Projects />
       <Blogs />
