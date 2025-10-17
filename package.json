@@ -9,7 +9,11 @@
     "generate:og": "node scripts/generate-og-images.mjs",
     "start": "next start",
     "lint": "biome check",
-    "format": "biome format --write"
+    "format": "biome format --write",
+    "docker-build": "docker build -t xiwuio:latest .",
+    "docker-run": "docker run --rm --name xio -p 3000:3000 xiwuio:latest",
+    "docker-stop": "docker stop xio || true",
+    "docker-remove": "docker rm xio || true"
   },
   "dependencies": {
     "@icons-pack/react-simple-icons": "^13.8.0",
@@ -35,6 +39,7 @@
     "react-dom": "19.1.0",
     "tailwind-merge": "^3.3.1",
     "tsx": "^4.20.6",
+    "turbo": "^2.5.8",
     "zustand": "^5.0.8"
   },
   "devDependencies": {

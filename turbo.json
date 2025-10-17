@@ -1,0 +1,33 @@
+{
+  "$schema": "https://turborepo.com/schema.json",
+  "tasks": {
+    "generate:og": {
+      "outputs": ["public/og-images/**"]
+    },
+    "build": {
+      "dependsOn": ["generate:og", "^build"],
+      "outputs": [".next/**", "!.next/cache/**"]
+    },
+    "check-types": {
+      "dependsOn": ["^check-types"]
+    },
+    "dev": {
+      "persistent": true,
+      "cache": false
+    },
+    "docker-build": {
+      "cache": false
+    },
+    "docker-run": {
+      "dependsOn": ["docker-build", "docker-build"],
+      "cache": false
+    },
+    "docker-stop": {
+      "cache": false
+    },
+    "docker-rm": {
+      "dependsOn": ["docker-stop", "docker-stop"],
+      "cache": false
+    }
+  }
+}
