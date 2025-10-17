@@ -1,5 +1,5 @@
-import { getLocalizedText, LocalizedText } from "@/i18n/routing";
 import { getLocale } from "next-intl/server";
+import { getLocalizedText, type LocalizedText } from "@/i18n/routing";
 
 const localeText: Record<string, LocalizedText> = {
   title: {
@@ -7,8 +7,8 @@ const localeText: Record<string, LocalizedText> = {
     zh: "習武",
   },
   tag: {
-    en: "PM / Founder / Fullstack_",
-    zh: "产品经理 / 创始人 / 开发者_",
+    en: "PM / Solopreneur / Fullstack_",
+    zh: "产品经理 / 独立创客 / 全栈开发_",
   },
   description_1: {
     en: "Eight years in product management have only deepened my commitment to independent thought.",
@@ -29,11 +29,13 @@ export default async function Hero() {
 
   return (
     <section>
-      <h1 className="text-4xl font-mono font-bold mb-6 flex items-center gap-3 flex-wrap">
+      <h1 className="mb-6 flex flex-wrap items-center gap-3 font-bold font-mono text-4xl">
         <span className="font-rubik-microbe">{getLocalizedText(localeText.title, locale)}</span>
-        <span className="bg-foreground text-background text-base px-2 py-0.5">{getLocalizedText(localeText.tag, locale)}</span>
+        <span className="bg-foreground px-2 py-0.5 text-background text-base">
+          {getLocalizedText(localeText.tag, locale)}
+        </span>
       </h1>
-      <div className="space-y-4 text-foreground/90 leading-relaxed max-w-2xl">
+      <div className="max-w-2xl space-y-4 text-foreground/90 leading-relaxed">
         <p>{getLocalizedText(localeText.description_1, locale)}</p>
         <p>{getLocalizedText(localeText.description_2, locale)}</p>
         <p>{getLocalizedText(localeText.description_3, locale)}</p>

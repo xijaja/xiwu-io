@@ -12,7 +12,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
   }
 
   // 如果请求语言不支持，则设置为默认语言
-  if (!locale || !routing.locales.includes(locale as any)) {
+  if (!(locale && routing.locales.includes(locale as any))) {
     return {
       locale: routing.defaultLocale,
       messages: (await import(`./messages/${routing.defaultLocale}.json`)).default,

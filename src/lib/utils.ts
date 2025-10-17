@@ -18,7 +18,6 @@ export function formatDate(locale: string, date: string) {
   // 如果 locale 是 en，则返回英文日期，例如：January 2025
   if (locale === "zh") {
     return new Date(date).toLocaleDateString("zh-CN", { year: "numeric", month: "long" });
-  } else {
-    return new Date(date).toLocaleDateString("en-US", { year: "numeric", month: "long" });
   }
+    return new Date(date).toLocaleDateString("en-US", { year: "numeric", month: "long" });
 }

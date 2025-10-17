@@ -16,24 +16,24 @@ const LOCALES = ["en", "zh"];
 // 获取所有博客文章
 async function getAllBlogPosts() {
   const posts = [];
-  
+
   for (const locale of LOCALES) {
     const blogDir = path.join(process.cwd(), "src", "content", "blogs", locale);
-    
+
     try {
       const files = await readdir(blogDir);
-      
-      for (const file of files.filter(f => f.endsWith(".mdx"))) {
+
+      for (const file of files.filter((f) => f.endsWith(".mdx"))) {
         const source = await readFile(path.join(blogDir, file), "utf8");
         const { data } = matter(source);
-        
+
         // 跳过草稿
         if (data?.draft === true) continue;
-        
+
         // 获取 slug：优先使用 frontmatter.slug，否则使用文件名
         const fmSlug = typeof data?.slug === "string" && data.slug.trim().length > 0 ? data.slug : undefined;
         const slug = fmSlug ?? file.replace(/\.mdx$/, "");
-        
+
         posts.push({
           locale,
           slug,
@@ -46,7 +46,7 @@ async function getAllBlogPosts() {
       console.warn(`无法读取 ${locale} 语言的博客目录:`, error);
     }
   }
-  
+
   return posts;
 }
 
@@ -73,15 +73,15 @@ async function generateOGImage(title) {
             type: "div",
             props: {
               style: {
-                 // 🎨 标题样式 - 可自定义字体、大小、颜色等
+                // 🎨 标题样式 - 可自定义字体、大小、颜色等
                 fontSize: Math.min(64, Math.max(32, 800 / title.length)),
                 fontWeight: 800,
                 lineHeight: 1.2,
                 maxWidth: "100%",
-                wordWrap: "break-word"
+                wordWrap: "break-word",
               },
-              children: title
-            }
+              children: title,
+            },
           },
           {
             type: "div",
@@ -90,13 +90,13 @@ async function generateOGImage(title) {
                 // 🎨 副标题样式 - 可自定义字体、大小、颜色等
                 fontSize: 28,
                 opacity: 0.9,
-                marginTop: 16
+                marginTop: 16,
               },
-              children: SITE_NAME
-            }
-          }
-        ]
-      }
+              children: SITE_NAME,
+            },
+          },
+        ],
+      },
     },
     {
       // 🎨 图片尺寸 - 可自定义宽度、高度等
@@ -109,32 +109,32 @@ async function generateOGImage(title) {
 // 主函数
 async function main() {
   console.log("🎨 开始生成静态 OG 图片...");
-  
+
   // 确保输出目录存在
   const outputDir = path.join(process.cwd(), "public", "og");
   await mkdir(outputDir, { recursive: true });
-  
+
   // 获取所有博客文章
   const posts = await getAllBlogPosts();
   console.log(`📝 找到 ${posts.length} 篇文章`);
-  
+
   // 生成每篇文章的 OG 图片
   let generated = 0;
   const errors = [];
-  
+
   for (const post of posts) {
     try {
       console.log(`📸 正在生成: ${post.locale}/${post.slug}`);
-      
+
       // 生成图片
       const imageResponse = await generateOGImage(post.title);
       const imageBuffer = await imageResponse.arrayBuffer();
-      
+
       // 保存图片文件
       const filename = `${post.locale}-${post.slug}.png`;
       const filepath = path.join(outputDir, filename);
       await writeFile(filepath, Buffer.from(imageBuffer));
-      
+
       generated++;
       console.log(`✅ 已生成: ${filename}`);
     } catch (error) {
@@ -143,7 +143,7 @@ async function main() {
       errors.push(errorMsg);
     }
   }
-  
+
   // 生成默认的 OG 图片（用于首页等）
   try {
     console.log("📸 正在生成默认 OG 图片...");
@@ -158,11 +158,11 @@ async function main() {
     console.error(errorMsg);
     errors.push(errorMsg);
   }
-  
+
   // 输出结果
-  console.log(`\n🎉 OG 图片生成完成!`);
+  console.log("\n🎉 OG 图片生成完成!");
   console.log(`✅ 成功生成: ${generated} 个图片`);
-  
+
   if (errors.length > 0) {
     console.log(`❌ 失败: ${errors.length} 个`);
     for (const error of errors) {

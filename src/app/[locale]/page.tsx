@@ -11,7 +11,7 @@ export async function generateStaticParams() {
 
 export default function HomePage() {
   return (
-    <main className="max-w-4xl mx-auto px-6 pt-16 flex flex-col gap-16 font-roboto-mono">
+    <main className="mx-auto flex max-w-4xl flex-col gap-16 px-6 pt-16 font-roboto-mono">
       <Hero />
       <Projects />
       <Blogs />

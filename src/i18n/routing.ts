@@ -1,5 +1,5 @@
-import { defineRouting } from "next-intl/routing";
 import { createNavigation } from "next-intl/navigation";
+import { defineRouting } from "next-intl/routing";
 
 // 支持的语言
 export const LOCALES = ["en", "zh"];
@@ -12,15 +12,13 @@ export const LOCALE_NAMES: Record<string, string> = {
 };
 
 // 本地化文本
-export interface LocalizedText {
+export type LocalizedText = {
   en: string;
   zh: string;
-}
+};
 
 // 类型安全的获取本地化文本的函数
-export const getLocalizedText = (text: LocalizedText, locale: Locale): string => {
-  return text[locale as keyof typeof text];
-};
+export const getLocalizedText = (text: LocalizedText, locale: Locale): string => text[locale as keyof typeof text];
 
 export const routing = defineRouting({
   // 支持的所有语言的列表

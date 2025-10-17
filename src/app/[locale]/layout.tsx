@@ -1,14 +1,14 @@
 import "@/app/globals.css";
 import type { Metadata } from "next";
 import { Borel, Geist, Geist_Mono, Roboto_Mono, Rubik_Microbe } from "next/font/google";
-import { ThemeProvider } from "next-themes";
-import { SITE_DESC, SITE_NAME, SITE_URL } from "@/lib/config";
+import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { routing } from "@/i18n/routing";
-import { notFound } from "next/navigation";
+import { ThemeProvider } from "next-themes";
 import Navbar from "@/components/blocks/navbar";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
+import { routing } from "@/i18n/routing";
+import { SITE_NAME, SITE_URL } from "@/lib/config";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -117,13 +117,16 @@ export default async function RootLayout({ children, params }: Readonly<Props>) 
 
   return (
     <html lang={locale || "en"} suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} ${robotoMono.variable} ${borel.variable} ${rubikMicrobe.variable} antialiased`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} ${robotoMono.variable} ${borel.variable} ${rubikMicrobe.variable} antialiased`}
+      >
         {/* 固定网格背景层 */}
         <div
           aria-hidden="true"
-          className="fixed inset-0 z-[-1] pointer-events-none dark:hidden"
+          className="pointer-events-none fixed inset-0 z-[-1] dark:hidden"
           style={{
-            backgroundImage: "linear-gradient(to right, #e7e5e4 1px, transparent 1px), linear-gradient(to bottom, #e7e5e4 1px, transparent 1px)",
+            backgroundImage:
+              "linear-gradient(to right, #e7e5e4 1px, transparent 1px), linear-gradient(to bottom, #e7e5e4 1px, transparent 1px)",
             backgroundSize: "20px 20px",
             backgroundPosition: "0 0, 0 0",
             WebkitMaskImage:
@@ -136,9 +139,10 @@ export default async function RootLayout({ children, params }: Readonly<Props>) 
         />
         <div
           aria-hidden="true"
-          className="fixed inset-0 z-[-1] pointer-events-none hidden dark:block"
+          className="pointer-events-none fixed inset-0 z-[-1] hidden dark:block"
           style={{
-            backgroundImage: "linear-gradient(to right, rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.06) 1px, transparent 1px)",
+            backgroundImage:
+              "linear-gradient(to right, rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.06) 1px, transparent 1px)",
             backgroundSize: "20px 20px",
             backgroundPosition: "0 0, 0 0",
             WebkitMaskImage:

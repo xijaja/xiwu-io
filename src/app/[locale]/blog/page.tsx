@@ -55,7 +55,7 @@ export default async function BlogListPage({ params }: Props) {
   const posts = await getPosts(locale);
 
   return (
-    <section className="max-w-4xl mx-auto px-6 my-16 font-roboto-mono">
+    <section className="mx-auto my-16 max-w-4xl px-6 font-roboto-mono">
       <h1 className="mb-4 font-bold text-2xl">Blog</h1>
       <ul className="space-y-4">
         {posts.map((p) => (

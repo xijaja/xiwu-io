@@ -13,7 +13,7 @@ import {
   SiReplicate,
   SiShadcnui,
 } from "@icons-pack/react-simple-icons";
-import React from "react";
+import type React from "react";
 import Image from "next/image";
 
 type stack = {
@@ -43,12 +43,12 @@ const stackList: stack[] = [
 export default function Stack() {
   return (
     <section>
-      <h2 className="text-2xl font-roboto-mono font-bold mb-8">Stack_</h2>
-      <ul className="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <h2 className="mb-8 font-bold font-roboto-mono text-2xl">Stack_</h2>
+      <ul className="grid grid-cols-2 gap-3 md:grid-cols-4">
         {stackList.map((stack) => (
           <li key={stack.name}>
             <div className="flex items-center gap-3">
-              <div className="w-6 h-6 text-[#000000] dark:text-white">{stack.icon}</div>
+              <div className="h-6 w-6 text-[#000000] dark:text-white">{stack.icon}</div>
               <span>{stack.name}</span>
             </div>
           </li>

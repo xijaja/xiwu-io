@@ -20,7 +20,7 @@ export async function GET(_req: Request, ctx?: Params) {
   const resolvedParams = typeof rawParams?.then === "function" ? await rawParams : rawParams;
   const locale: string | undefined = resolvedParams?.locale;
   // 如果 locale 不存在或不支持，则返回 404
-  if (!locale || !routing.locales.includes(locale as (typeof routing.locales)[number])) {
+  if (!(locale && routing.locales.includes(locale as (typeof routing.locales)[number]))) {
     return new NextResponse("Invalid locale", { status: 404 });
   }
   // 获取博客目录

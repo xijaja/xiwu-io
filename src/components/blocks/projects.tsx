@@ -1,9 +1,12 @@
-import { Link } from "@/i18n/routing";
-import { formatDate } from "@/lib/utils";
-import { readdir, readFile } from "fs/promises";
+import { readdir, readFile } from "node:fs/promises";
+import path from "node:path";
 import matter from "gray-matter";
 import { getLocale } from "next-intl/server";
-import path from "path";
+import { Link } from "@/i18n/routing";
+import { formatDate } from "@/lib/utils";
+
+// 正则表达式常量
+const MDX_EXTENSION_REGEX = /\.mdx$/;
 
 // 获取项目列表
 async function getProjects(locale: string) {
@@ -11,15 +14,17 @@ async function getProjects(locale: string) {
   const dir = path.join(process.cwd(), "src", "content", "projects", locale);
   const files = await readdir(dir);
   // 读取文件
-  const projects = [];
+  const projects: any[] = [];
   for (const file of files) {
     const source = await readFile(path.join(dir, file), "utf8");
     const { data } = matter(source); // 分离出 frontmatter
     // 如果没有发布日期，说明没有发布
-    if (!data.publisDate) continue;
+    if (!data.publisDate) {
+      continue;
+    }
     // 如果 id 不存在，则使用文件名
     if (!data?.id) {
-      data.id = file.replace(/\.mdx$/, "");
+      data.id = file.replace(MDX_EXTENSION_REGEX, "");
     }
     projects.push(data);
   }
@@ -38,13 +43,20 @@ export default async function Projects() {
 
   return (
     <section>
-      <h2 className="text-2xl font-roboto-mono font-bold mb-8">Projects_</h2>
+      <h2 className="mb-8 font-bold font-roboto-mono text-2xl">Projects_</h2>
       <ul className="space-y-6">
         {projects.map((project) => (
           <li key={project.id}>
-            <Link target="_blank" rel="noopener" href={project.url} className="[&:hover_h3]:underline [&:hover_h3]:text-foreground/80">
-              <h3 className="text-lg font-medium mb-1 underline-offset-4 decoration-1 decoration-double">{project.title}</h3>
-              <p className="text-sm text-muted-foreground">
+            <Link
+              className="[&:hover_h3]:text-foreground/80 [&:hover_h3]:underline"
+              href={project.url}
+              rel="noopener"
+              target="_blank"
+            >
+              <h3 className="mb-1 font-medium text-lg decoration-1 decoration-double underline-offset-4">
+                {project.title}
+              </h3>
+              <p className="text-muted-foreground text-sm">
                 {project.publisDate ? ` ${formatDate(locale, project.publisDate)} / ` : ""}
                 {project.description}
               </p>

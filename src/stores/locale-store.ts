@@ -17,7 +17,5 @@ export const useLocaleStore = create<LocaleState>((set) => ({
     Cookies.set("langAlertDismissed", "true", { expires: 30 });
     set({ showLanguageAlert: false });
   },
-  getLangAlertDismissed: () => {
-    return Cookies.get("langAlertDismissed") === "true";
-  },
+  getLangAlertDismissed: () => Cookies.get("langAlertDismissed") === "true",
 }));
