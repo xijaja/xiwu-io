@@ -1,15 +1,15 @@
-import { readdir, readFile } from "fs/promises";
+import { readdir, readFile } from "node:fs/promises";
+import path from "node:path";
 import matter from "gray-matter";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
-import { MDXRemote } from "next-mdx-remote-client/rsc";
-import path from "path";
-import { SITE_NAME, SITE_URL } from "@/lib/config";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
-import { Link, routing } from "@/i18n/routing";
-import { formatDate } from "@/lib/utils";
-import { ArrowLeft, ArrowRight } from "lucide-react";
 import { setRequestLocale } from "next-intl/server";
+import { MDXRemote } from "next-mdx-remote-client/rsc";
+import { Link, routing } from "@/i18n/routing";
+import { SITE_NAME, SITE_URL } from "@/lib/config";
+import { formatDate } from "@/lib/utils";
 
 // 强制静态化：若页面内使用了动态 API（cookies、headers 等）则直接报错
 export const dynamic = "error";
@@ -190,8 +190,8 @@ export default async function BlogPage({ params }: Props) {
       <nav className="mt-12 grid grid-cols-2 gap-4 border-gray-200 border-t pt-8 dark:border-gray-700">
         {prev ? (
           <Link
-            href={`/blog/${prev.slug}`}
             className="group flex h-20 items-center gap-3 rounded-lg border border-gray-200 px-4 py-4 transition-all duration-200 hover:border-blue-300 hover:bg-blue-50 dark:border-gray-700 dark:hover:border-blue-600 dark:hover:bg-blue-950/30"
+            href={`/blog/${prev.slug}`}
           >
             <ArrowLeft className="size-5 flex-shrink-0 text-gray-400 transition-colors group-hover:text-blue-500" />
             <div className="min-w-0 flex-1 text-left">
@@ -207,8 +207,8 @@ export default async function BlogPage({ params }: Props) {
 
         {next ? (
           <Link
-            href={`/blog/${next.slug}`}
             className="group flex h-20 items-center gap-3 rounded-lg border border-gray-200 px-4 py-4 transition-all duration-200 hover:border-blue-300 hover:bg-blue-50 dark:border-gray-700 dark:hover:border-blue-600 dark:hover:bg-blue-950/30"
+            href={`/blog/${next.slug}`}
           >
             <div className="min-w-0 flex-1 text-right">
               <div className="mb-1 text-gray-500 text-xs dark:text-gray-400">下一篇</div>

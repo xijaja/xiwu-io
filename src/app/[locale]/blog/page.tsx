@@ -1,11 +1,11 @@
-import { readdir, readFile } from "fs/promises";
+import { readdir, readFile } from "node:fs/promises";
+import path from "node:path";
 import matter from "gray-matter";
 import Link from "next/link";
-import path from "path";
-import { routing } from "@/i18n/routing";
-import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
+import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
+import { routing } from "@/i18n/routing";
 
 // 静态列表页：若误用了动态 API 则直接报错
 export const dynamic = "error";
@@ -19,17 +19,22 @@ type PostItem = {
   date?: string;
 };
 
+// 正则表达式常量
+const MDX_EXTENSION = /\.mdx$/;
+
 // 读取 MDX 列表、过滤草稿、应用 frontmatter.slug 覆盖，并按日期倒序
 async function getPosts(locale: string): Promise<PostItem[]> {
   const dir = path.join(process.cwd(), "src", "content", "blogs", locale);
   const files = await readdir(dir);
   const posts: PostItem[] = [];
-  for (const f of files.filter((f) => f.endsWith(".mdx"))) {
+  for (const f of files.filter((file) => file.endsWith(".mdx"))) {
     const source = await readFile(path.join(dir, f), "utf8");
     const { data } = matter(source);
-    if (data?.draft === true) continue;
+    if (data?.draft === true) {
+      continue;
+    }
     const fmSlug = typeof data?.slug === "string" && data.slug.trim().length > 0 ? data.slug : undefined;
-    const slug = fmSlug ?? f.replace(/\.mdx$/, "");
+    const slug = fmSlug ?? f.replace(MDX_EXTENSION, "");
     posts.push({
       slug,
       title: data?.title ?? slug,

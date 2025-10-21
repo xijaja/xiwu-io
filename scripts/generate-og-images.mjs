@@ -4,14 +4,22 @@
  * 遍历所有博客文章，为每篇文章生成对应的 OG 图片
  */
 
-import { readdir, readFile, mkdir, writeFile } from "fs/promises";
-import matter from "gray-matter";
-import path from "path";
+import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
+import path from "node:path";
 import { ImageResponse } from "@vercel/og";
+import matter from "gray-matter";
 
 // 配置
 const SITE_NAME = "xiwu.io";
 const LOCALES = ["en", "zh"];
+
+// 正则表达式常量
+const MDX_EXTENSION = /\.mdx$/;
+
+// OG 图片样式配置
+const MAX_FONT_SIZE = 64;
+const MIN_FONT_SIZE = 32;
+const FONT_SIZE_FACTOR = 800;
 
 // 获取所有博客文章
 async function getAllBlogPosts() {
@@ -28,11 +36,13 @@ async function getAllBlogPosts() {
         const { data } = matter(source);
 
         // 跳过草稿
-        if (data?.draft === true) continue;
+        if (data?.draft === true) {
+          continue;
+        }
 
         // 获取 slug：优先使用 frontmatter.slug，否则使用文件名
         const fmSlug = typeof data?.slug === "string" && data.slug.trim().length > 0 ? data.slug : undefined;
-        const slug = fmSlug ?? file.replace(/\.mdx$/, "");
+        const slug = fmSlug ?? file.replace(MDX_EXTENSION, "");
 
         posts.push({
           locale,
@@ -51,7 +61,7 @@ async function getAllBlogPosts() {
 }
 
 // 生成 OG 图片
-async function generateOGImage(title) {
+function generateOGImage(title) {
   return new ImageResponse(
     {
       type: "div",
@@ -74,7 +84,7 @@ async function generateOGImage(title) {
             props: {
               style: {
                 // 🎨 标题样式 - 可自定义字体、大小、颜色等
-                fontSize: Math.min(64, Math.max(32, 800 / title.length)),
+                fontSize: Math.min(MAX_FONT_SIZE, Math.max(MIN_FONT_SIZE, FONT_SIZE_FACTOR / title.length)),
                 fontWeight: 800,
                 lineHeight: 1.2,
                 maxWidth: "100%",

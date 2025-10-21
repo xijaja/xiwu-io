@@ -3,10 +3,11 @@ import Footer from "@/components/blocks/footer";
 import Hero from "@/components/blocks/hero";
 import Projects from "@/components/blocks/projects";
 import Stack from "@/components/blocks/stack";
+import { LOCALES } from "@/i18n/routing";
 
 // 这个函数会在构建时运行，为每个 locale 生成一个静态页面
-export async function generateStaticParams() {
-  return [{ locale: "en" }, { locale: "zh" }];
+export function generateStaticParams(): { locale: string }[] {
+  return LOCALES.map((locale: string) => ({ locale }));
 }
 
 export default function HomePage() {
