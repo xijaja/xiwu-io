@@ -3,7 +3,7 @@ import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 
-export async function GET(req: Request) {
+export function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const title = searchParams.get("title") ?? "Xiwu Blog";
 
