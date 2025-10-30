@@ -1,50 +1,16 @@
-import { readdir, readFile } from "node:fs/promises";
-import path from "node:path";
-import matter from "gray-matter";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
+import { getAllPosts } from "@/lib/blog";
 
 // 静态列表页：若误用了动态 API 则直接报错
 export const dynamic = "error";
 // 不使用 ISR，保持 sitemap/订阅源 与构建产物一致
 export const revalidate = false;
 
-type PostItem = {
-  slug: string;
-  title: string;
-  description?: string;
-  date?: string;
-};
-
-// 正则表达式常量
-const MDX_EXTENSION = /\.mdx$/;
-
-// 读取 MDX 列表、过滤草稿、应用 frontmatter.slug 覆盖，并按日期倒序
-async function getPosts(locale: string): Promise<PostItem[]> {
-  const dir = path.join(process.cwd(), "src", "content", "blogs", locale);
-  const files = await readdir(dir);
-  const posts: PostItem[] = [];
-  for (const f of files.filter((file) => file.endsWith(".mdx"))) {
-    const source = await readFile(path.join(dir, f), "utf8");
-    const { data } = matter(source);
-    if (data?.draft === true) {
-      continue;
-    }
-    const fmSlug = typeof data?.slug === "string" && data.slug.trim().length > 0 ? data.slug : undefined;
-    const slug = fmSlug ?? f.replace(MDX_EXTENSION, "");
-    posts.push({
-      slug,
-      title: data?.title ?? slug,
-      description: data?.description,
-      date: data?.date,
-    });
-  }
-  posts.sort((a, b) => new Date(b.date ?? 0).getTime() - new Date(a.date ?? 0).getTime());
-  return posts;
-}
+// 使用统一 blog API 获取文章列表
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -56,8 +22,8 @@ export default async function BlogListPage({ params }: Props) {
   }
   // 设置请求语言
   setRequestLocale(locale);
-  // 获取文章列表
-  const posts = await getPosts(locale);
+  // 获取文章列表（已包含 draft 过滤与排序）
+  const posts = await getAllPosts(locale);
 
   return (
     <section className="mx-auto my-16 max-w-4xl px-6 font-roboto-mono">

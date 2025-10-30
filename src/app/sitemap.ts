@@ -1,62 +1,51 @@
-import { readdir, readFile } from "fs/promises";
-import matter from "gray-matter";
 import type { MetadataRoute } from "next";
-import path from "path";
+import { DEFAULT_LOCALE, LOCALES } from "@/i18n/routing";
+import { collectAllSlugs, getPostBySlug } from "@/lib/blog";
 import { SITE_URL } from "@/lib/config";
-import { LOCALES, DEFAULT_LOCALE } from "@/i18n/routing";
+
+// 使用统一 blog API
 
 // 生成语言前缀路径
-function getLocalePath(locale: string, path: string): string {
+function getLocalePath(locale: string, pagePath: string): string {
   if (locale === DEFAULT_LOCALE) {
-    return path;
+    return pagePath;
   }
-  return `/${locale}${path}`;
+  return `/${locale}${pagePath}`;
 }
 
 // 生成多语言 alternates
-function generateAlternates(path: string): Record<string, string> {
+function generateAlternates(pagePath: string): Record<string, string> {
   const alternates: Record<string, string> = {};
 
   for (const locale of LOCALES) {
-    alternates[locale] = new URL(getLocalePath(locale, path), SITE_URL).toString();
+    alternates[locale] = new URL(getLocalePath(locale, pagePath), SITE_URL).toString();
   }
 
   // 添加 x-default 指向默认语言
-  alternates["x-default"] = new URL(getLocalePath(DEFAULT_LOCALE, path), SITE_URL).toString();
+  alternates["x-default"] = new URL(getLocalePath(DEFAULT_LOCALE, pagePath), SITE_URL).toString();
 
   return alternates;
 }
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const entries: MetadataRoute.Sitemap = [];
-
-  // 收集所有博客文章的 slug
-  const allBlogSlugs = new Set<string>();
-
-  for (const locale of LOCALES) {
-    const blogDir = path.join(process.cwd(), "src", "content", "blogs", locale);
-    try {
-      const files = await readdir(blogDir);
-      for (const f of files.filter((f) => f.endsWith(".mdx"))) {
-        const source = await readFile(path.join(blogDir, f), "utf8");
-        const { data } = matter(source);
-        if (data?.draft === true) continue;
-        const fmSlug = typeof data?.slug === "string" && data.slug.trim().length > 0 ? data.slug : undefined;
-        const slug = fmSlug ?? f.replace(/\.mdx$/, "");
-        allBlogSlugs.add(slug);
-      }
-    } catch {
-      // 忽略不存在的目录
-    }
+// 通过统一 API 判断文章是否存在并取修改时间
+async function checkBlogExists(locale: string, slug: string): Promise<{ exists: boolean; lastModified?: Date }> {
+  const post = await getPostBySlug(locale, slug);
+  if (!post) {
+    return { exists: false };
   }
+  const lastModified = post.data?.date ? new Date(post.data.date) : undefined;
+  return { exists: true, lastModified };
+}
 
-  // 静态页面
+// 生成静态页面的 sitemap 条目
+function generateStaticPageEntries(): MetadataRoute.Sitemap {
   const staticPages = [
     { path: "/", priority: 1.0 },
     { path: "/blog", priority: 0.8 },
   ];
 
-  // 为每个静态页面生成多语言条目
+  const entries: MetadataRoute.Sitemap = [];
+
   for (const page of staticPages) {
     for (const locale of LOCALES) {
       const localePath = getLocalePath(locale, page.path);
@@ -71,27 +60,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }
 
-  // 为每个博客文章生成多语言条目
+  return entries;
+}
+
+// 生成博客文章的 sitemap 条目
+async function generateBlogEntries(allBlogSlugs: Set<string>): Promise<MetadataRoute.Sitemap> {
+  const entries: MetadataRoute.Sitemap = [];
+
   for (const slug of allBlogSlugs) {
     const blogPath = `/blog/${slug}`;
 
     for (const locale of LOCALES) {
-      // 检查该语言版本是否存在
-      const blogDir = path.join(process.cwd(), "src", "content", "blogs", locale);
-      let lastModified: Date | undefined;
-      let exists = false;
-
-      try {
-        const filePath = path.join(blogDir, `${slug}.mdx`);
-        const source = await readFile(filePath, "utf8");
-        const { data } = matter(source);
-        if (data?.draft !== true) {
-          exists = true;
-          if (data?.date) lastModified = new Date(data.date);
-        }
-      } catch {
-        // 该语言版本不存在
-      }
+      const { exists, lastModified } = await checkBlogExists(locale, slug);
 
       if (exists) {
         const localePath = getLocalePath(locale, blogPath);
@@ -108,4 +88,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
 
   return entries;
+}
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const allBlogSlugs = await collectAllSlugs();
+  const staticEntries = generateStaticPageEntries();
+  const blogEntries = await generateBlogEntries(allBlogSlugs);
+
+  return [...staticEntries, ...blogEntries];
 }

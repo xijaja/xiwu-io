@@ -29,6 +29,9 @@
       "suspicious": {
         "noUnknownAtRules": "off",
         "noExplicitAny": "off"
+      },
+      "security": {
+        "noDangerouslySetInnerHtml": "off"
       }
     },
     "domains": {

@@ -2,7 +2,7 @@
 import { NextResponse } from "next/server";
 import { SITE_NAME, SITE_URL } from "@/lib/config";
 
-export async function GET() {
+export function GET() {
   const body = `# LLMs crawling policy for ${SITE_NAME}
 # This file is for large language models and AI crawlers.
 # You may customize rules below.
