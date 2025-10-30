@@ -1,12 +1,12 @@
 "use client";
 
-import { useLocaleStore } from "@/stores/locale-store";
 import { Languages } from "lucide-react";
-import { useLocale } from "next-intl";
-import { usePathname, useRouter } from "@/i18n/routing";
 import { useParams } from "next/navigation";
+import { useLocale } from "next-intl";
 import { startTransition, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { usePathname, useRouter } from "@/i18n/routing";
+import { useLocaleStore } from "@/stores/locale-store";
 
 export default function LocaleToggle() {
   const router = useRouter();
@@ -18,7 +18,7 @@ export default function LocaleToggle() {
 
   useEffect(() => {
     setCurrentLocale(locale);
-  }, [locale, setCurrentLocale]);
+  }, [locale]);
 
   function onToggle(nextLocale: string) {
     setCurrentLocale(nextLocale);
@@ -38,10 +38,10 @@ export default function LocaleToggle() {
 
   return (
     <Button
-      variant="ghost"
-      size="icon"
       className="size-8 border-none"
       onClick={() => onToggle(currentLocale === "en" ? "zh" : "en")}
+      size="icon"
+      variant="ghost"
     >
       <Languages />
     </Button>
