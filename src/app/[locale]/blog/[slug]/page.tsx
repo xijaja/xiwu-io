@@ -68,18 +68,14 @@ function NavLink({
       className="group flex h-20 items-center gap-3 rounded-lg border border-gray-200 px-4 py-4 transition-all duration-200 hover:border-blue-300 hover:bg-blue-50 dark:border-gray-700 dark:hover:border-blue-600 dark:hover:bg-blue-950/30"
       href={href}
     >
-      {isPrev && (
-        <ArrowLeft className="size-5 flex-shrink-0 text-gray-400 transition-colors group-hover:text-blue-500" />
-      )}
+      {isPrev && <ArrowLeft className="size-5 shrink-0 text-gray-400 transition-colors group-hover:text-blue-500" />}
       <div className={`min-w-0 flex-1 ${isPrev ? "text-left" : "text-right"}`}>
         <div className="mb-1 text-gray-500 text-xs dark:text-gray-400">{label}</div>
         <div className="line-clamp-2 font-medium text-gray-900 text-sm leading-tight group-hover:text-blue-600 dark:text-gray-100 dark:group-hover:text-blue-400">
           {title}
         </div>
       </div>
-      {!isPrev && (
-        <ArrowRight className="size-5 flex-shrink-0 text-gray-400 transition-colors group-hover:text-blue-500" />
-      )}
+      {!isPrev && <ArrowRight className="size-5 shrink-0 text-gray-400 transition-colors group-hover:text-blue-500" />}
     </Link>
   );
 }

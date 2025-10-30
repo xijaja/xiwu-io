@@ -22,6 +22,14 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+
+  // 实验特性配置
+  experimental: {
+    // 在终端中显示浏览器调试信息
+    browserDebugInfoInTerminal: true,
+    // 文件系统缓存
+    turbopackFileSystemCacheForDev: true,
+  },
 };
 
 // 使用 next-intl 插件
