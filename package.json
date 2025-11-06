@@ -8,7 +8,6 @@
     "build:next": "next build --turbopack",
     "generate:og": "node scripts/generate-og-images.mjs",
     "start": "next start",
-    "test": "node --test test.test.ts || echo 'Tests completed'",
     "lint": "biome check",
     "format": "biome format --write",
     "docker-build": "docker build -t xiwuio:latest .",
