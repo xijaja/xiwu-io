@@ -115,7 +115,7 @@ export async function getAllPosts(locale: string, opts: { includeDraft?: boolean
 
 export async function getPostBySlug(
   locale: string,
-  slug: string
+  slug: string,
 ): Promise<{ data: Frontmatter; content: string } | null> {
   const filePath = await resolveFilePathBySlug(locale, slug);
   if (!filePath) {
@@ -161,7 +161,7 @@ export async function resolveFilePathBySlug(locale: string, slug: string): Promi
 
 export async function findPrevAndNext(
   locale: string,
-  currentSlug: string
+  currentSlug: string,
 ): Promise<{
   prev: { slug: string; title: string } | null;
   next: { slug: string; title: string } | null;

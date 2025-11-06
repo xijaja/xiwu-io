@@ -112,7 +112,7 @@ function generateOGImage(title) {
       // 🎨 图片尺寸 - 可自定义宽度、高度等
       width: 1200,
       height: 630,
-    }
+    },
   );
 }
 

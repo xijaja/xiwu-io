@@ -39,7 +39,7 @@ export async function GET(_req: Request, ctx?: Params) {
         <guid>${site}${localePrefix}/blog/${i.slug}</guid>
         ${i.date ? `<pubDate>${new Date(i.date).toUTCString()}</pubDate>` : ""}
         ${i.description ? `<description><![CDATA[${i.description}]]></description>` : ""}
-      </item>`
+      </item>`,
     )
     .join("");
 

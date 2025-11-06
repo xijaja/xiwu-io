@@ -19,5 +19,5 @@ export function formatDate(locale: string, date: string) {
   if (locale === "zh") {
     return new Date(date).toLocaleDateString("zh-CN", { year: "numeric", month: "long" });
   }
-    return new Date(date).toLocaleDateString("en-US", { year: "numeric", month: "long" });
+  return new Date(date).toLocaleDateString("en-US", { year: "numeric", month: "long" });
 }

@@ -31,7 +31,7 @@ export default function LocaleToggle() {
         // always match for the current route, we can skip runtime checks.
         // { pathname: "/", params: params || {} }, // if your want to redirect to the home page
         { pathname, params: params || {} }, // if your want to redirect to the current page
-        { locale: nextLocale }
+        { locale: nextLocale },
       );
     });
   }
