@@ -1,20 +1,20 @@
 import {
-  SiReact,
-  SiGithub,
+  SiCloudflare,
+  SiDocker,
+  SiDrizzle,
   SiFigma,
+  SiGithub,
   SiNextdotjs,
   SiNotion,
-  SiTypescript,
-  SiDrizzle,
-  SiStripe,
-  SiDocker,
-  SiCloudflare,
-  SiVercel,
+  SiReact,
   SiReplicate,
   SiShadcnui,
+  SiStripe,
+  SiTypescript,
+  SiVercel,
 } from "@icons-pack/react-simple-icons";
-import type React from "react";
 import Image from "next/image";
+import type React from "react";
 
 type stack = {
   name: string;
@@ -45,11 +45,11 @@ export default function Stack() {
     <section>
       <h2 className="mb-8 font-bold font-roboto-mono text-2xl">Stack_</h2>
       <ul className="grid grid-cols-2 gap-3 md:grid-cols-4">
-        {stackList.map((stack) => (
-          <li key={stack.name}>
+        {stackList.map((item) => (
+          <li key={item.name}>
             <div className="flex items-center gap-3">
-              <div className="h-6 w-6 text-[#000000] dark:text-white">{stack.icon}</div>
-              <span>{stack.name}</span>
+              <div className="h-6 w-6 text-[#000000] dark:text-white">{item.icon}</div>
+              <span>{item.name}</span>
             </div>
           </li>
         ))}
@@ -61,8 +61,8 @@ export default function Stack() {
 function Cursor() {
   return (
     <>
-      <Image src="/cursor.svg" alt="Cursor" width={20} height={20} className="dark:hidden" />
-      <Image src="/cursor-dark.png" alt="Cursor" width={20} height={20} className="hidden dark:block" />
+      <Image alt="Cursor" className="dark:hidden" height={20} src="/cursor.svg" width={20} />
+      <Image alt="Cursor" className="hidden dark:block" height={20} src="/cursor-dark.png" width={20} />
     </>
   );
 }
@@ -70,8 +70,8 @@ function Cursor() {
 function Xmind() {
   return (
     <>
-      <Image src="/xmind.png" alt="Xmind" width={24} height={24} className="dark:hidden" />
-      <Image src="/xmind-dark.png" alt="Xmind" width={24} height={24} className="hidden dark:block" />
+      <Image alt="Xmind" className="dark:hidden" height={24} src="/xmind.png" width={24} />
+      <Image alt="Xmind" className="hidden dark:block" height={24} src="/xmind-dark.png" width={24} />
     </>
   );
 }

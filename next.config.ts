@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
   // 严格模式
   reactStrictMode: true,
 
+  // 缓存组件
+  cacheComponents: true,
+
   // 优化输出
   output: "standalone",
 
