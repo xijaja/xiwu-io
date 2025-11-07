@@ -2,6 +2,7 @@ import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import matter from "gray-matter";
 import { cacheLife } from "next/cache";
+import { getLocale } from "next-intl/server";
 import { Link } from "@/i18n/routing";
 import { formatDate } from "@/lib/utils";
 
@@ -36,7 +37,8 @@ async function getProjects(locale: string) {
   return projects;
 }
 
-export default async function Projects({ locale }: { locale: string }) {
+export default async function Projects() {
+  const locale = await getLocale();
   const projects = await getProjects(locale);
 
   if (projects.length === 0) {

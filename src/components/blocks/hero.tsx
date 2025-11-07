@@ -1,3 +1,4 @@
+import { getLocale } from "next-intl/server";
 import { getLocalizedText, type LocalizedText } from "@/i18n/routing";
 
 const localeText: Record<string, LocalizedText> = {
@@ -23,7 +24,9 @@ const localeText: Record<string, LocalizedText> = {
   },
 };
 
-export default async function Hero({ locale }: { locale: string }) {
+export default async function Hero() {
+  const locale = await getLocale();
+
   return (
     <section>
       <h1 className="mb-6 flex flex-wrap items-center gap-3 font-bold font-mono text-4xl">

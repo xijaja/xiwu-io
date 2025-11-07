@@ -2,6 +2,7 @@ import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import matter from "gray-matter";
 import { cacheLife } from "next/cache";
+import { getLocale } from "next-intl/server";
 import { Link } from "@/i18n/routing";
 import { formatDate } from "@/lib/utils";
 
@@ -28,7 +29,8 @@ async function getBlogs(locale: string) {
   return blogs;
 }
 
-export default async function Blogs({ locale }: { locale: string }) {
+export default async function Blogs() {
+  const locale = await getLocale();
   const blogs = await getBlogs(locale);
 
   return (
