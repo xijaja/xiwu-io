@@ -12,11 +12,6 @@ import { findPrevAndNext, generateImageUrl, generateJsonLd, getPostBySlug } from
 import { SITE_NAME, SITE_URL } from "@/lib/config";
 import { formatDate } from "@/lib/utils";
 
-// 强制静态化：若页面内使用了动态 API（cookies、headers 等）则直接报错
-export const dynamic = "error";
-// 完全静态：不使用增量静态渲染（ISR）
-export const revalidate = false;
-
 // 正则表达式常量
 const MDX_EXTENSION = "/.mdx$/";
 
@@ -93,11 +88,9 @@ function JsonLd({ data }: { data: object }) {
 
 export default async function BlogPage({ params }: Props) {
   const { locale, slug } = await params;
-
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
-
   setRequestLocale(locale);
 
   const postData = await getPostBySlug(locale, slug);
