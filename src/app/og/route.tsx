@@ -1,7 +1,7 @@
 // 动态生成社交分享图（OG Image），供文章/首页等引用
 import { ImageResponse } from "next/og";
 
-export const runtime = "edge";
+// export const runtime = "edge";
 
 export function GET(req: Request) {
   const { searchParams } = new URL(req.url);

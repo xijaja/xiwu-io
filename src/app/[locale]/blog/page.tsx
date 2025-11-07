@@ -5,14 +5,9 @@ import { setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { getAllPosts } from "@/lib/blog";
 
-// 静态列表页：若误用了动态 API 则直接报错
-export const dynamic = "error";
-// 不使用 ISR，保持 sitemap/订阅源 与构建产物一致
-export const revalidate = false;
-
-// 使用统一 blog API 获取文章列表
-
-type Props = { params: Promise<{ locale: string }> };
+type Props = {
+  params: Promise<{ locale: string }>;
+};
 
 export default async function BlogListPage({ params }: Props) {
   const { locale } = await params;

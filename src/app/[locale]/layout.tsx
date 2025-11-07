@@ -7,7 +7,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ThemeProvider } from "next-themes";
 import Navbar from "@/components/blocks/navbar";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
-import { routing } from "@/i18n/routing";
+import { LOCALES, routing } from "@/i18n/routing";
 import { SITE_NAME, SITE_URL } from "@/lib/config";
 
 const geistSans = Geist({
@@ -64,6 +64,11 @@ const rubikMicrobe = Rubik_Microbe({
 //     },
 //   },
 // };
+
+// 这个函数会在构建时运行，为每个 locale 生成一个静态页面
+export function generateStaticParams(): { locale: string }[] {
+  return LOCALES.map((locale: string) => ({ locale }));
+}
 
 type MetadataProps = {
   params: Promise<{ locale: string }>;

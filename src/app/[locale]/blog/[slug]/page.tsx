@@ -36,14 +36,6 @@ export async function generateStaticParams(): Promise<Array<{ locale: string; sl
   return result;
 }
 
-// 使用统一 blog 库 API：已移除本地实现
-
-type Props = {
-  params: Promise<{ locale: string; slug: string }>;
-};
-
-// 使用统一 blog 库 API
-
 // 导航链接组件
 function NavLink({
   href,
@@ -85,6 +77,10 @@ function JsonLd({ data }: { data: object }) {
     />
   );
 }
+
+type Props = {
+  params: Promise<{ locale: string; slug: string }>;
+};
 
 export default async function BlogPage({ params }: Props) {
   const { locale, slug } = await params;

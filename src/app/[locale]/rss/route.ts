@@ -3,11 +3,6 @@ import { DEFAULT_LOCALE, routing } from "@/i18n/routing";
 import { getAllPosts } from "@/lib/blog";
 import { SITE_DESC, SITE_NAME, SITE_URL } from "@/lib/config";
 
-export const dynamic = "error"; // 禁止动态路由
-export const revalidate = false; // 禁止缓存
-
-// 使用统一 blog API
-
 type Params = { params: Promise<{ locale: string }> } | { params: { locale: string } };
 
 export async function GET(_req: Request, ctx?: Params) {
