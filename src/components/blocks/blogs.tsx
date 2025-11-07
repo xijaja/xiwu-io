@@ -1,12 +1,15 @@
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import matter from "gray-matter";
-import { getLocale } from "next-intl/server";
+import { cacheLife } from "next/cache";
 import { Link } from "@/i18n/routing";
 import { formatDate } from "@/lib/utils";
 
 // 获取博客列表
 async function getBlogs(locale: string) {
+  "use cache";
+  cacheLife("max"); // 缓存 30 天
+
   // 获取文件目录
   const dir = path.join(process.cwd(), "src", "content", "blogs", locale);
   const files = await readdir(dir);
@@ -25,8 +28,7 @@ async function getBlogs(locale: string) {
   return blogs;
 }
 
-export default async function Blogs() {
-  const locale = await getLocale();
+export default async function Blogs({ locale }: { locale: string }) {
   const blogs = await getBlogs(locale);
 
   return (

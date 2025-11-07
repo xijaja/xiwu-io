@@ -1,5 +1,5 @@
 import { getRequestConfig } from "next-intl/server";
-import { routing } from "./routing";
+import { type Locale, routing } from "./routing";
 
 export default getRequestConfig(async ({ requestLocale }) => {
   // 获取请求语言
@@ -12,7 +12,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
   }
 
   // 如果请求语言不支持，则设置为默认语言
-  if (!(locale && routing.locales.includes(locale as any))) {
+  if (!(locale && routing.locales.includes(locale as Locale))) {
     return {
       locale: routing.defaultLocale,
       messages: (await import(`./messages/${routing.defaultLocale}.json`)).default,

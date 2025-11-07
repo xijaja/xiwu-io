@@ -1,7 +1,7 @@
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import matter from "gray-matter";
-import { getLocale } from "next-intl/server";
+import { cacheLife } from "next/cache";
 import { Link } from "@/i18n/routing";
 import { formatDate } from "@/lib/utils";
 
@@ -10,6 +10,9 @@ const MDX_EXTENSION_REGEX = /\.mdx$/;
 
 // 获取项目列表
 async function getProjects(locale: string) {
+  "use cache";
+  cacheLife("max"); // 缓存 30 天
+
   // 获取文件目录
   const dir = path.join(process.cwd(), "src", "content", "projects", locale);
   const files = await readdir(dir);
@@ -33,8 +36,7 @@ async function getProjects(locale: string) {
   return projects;
 }
 
-export default async function Projects() {
-  const locale = await getLocale();
+export default async function Projects({ locale }: { locale: string }) {
   const projects = await getProjects(locale);
 
   if (projects.length === 0) {

@@ -1,15 +1,8 @@
 import { SiBilibili, SiGithub, SiX } from "@icons-pack/react-simple-icons";
 import { Rss } from "lucide-react";
-import { Suspense } from "react";
 import { Link } from "@/i18n/routing";
 
-function getCurrentYear(): number {
-  return new Date().getFullYear();
-}
-
 export default function Footer() {
-  // const currentYear = new Date().getFullYear();
-
   return (
     <footer>
       <div className="flex items-center gap-4 text-sm">
@@ -31,9 +24,7 @@ export default function Footer() {
         </Link>
       </div>
       <div className="mt-4 text-sm">
-        <Suspense fallback={<div className="h-4" />}>
-          <span className="text-lg">&copy;</span> {getCurrentYear()} xiwu.io
-        </Suspense>
+        <span className="text-lg">&copy;</span> 2025 xiwu.io
       </div>
     </footer>
   );

@@ -10,12 +10,18 @@ export function generateStaticParams(): { locale: string }[] {
   return LOCALES.map((locale: string) => ({ locale }));
 }
 
-export default function HomePage() {
+type Props = {
+  params: Promise<{ locale: string }>;
+};
+
+export default async function HomePage({ params }: Props) {
+  const { locale } = await params;
+
   return (
     <main className="mx-auto flex max-w-4xl flex-col gap-16 px-6 pt-16 font-roboto-mono">
-      <Hero />
-      <Projects />
-      <Blogs />
+      <Hero locale={locale} />
+      <Projects locale={locale} />
+      <Blogs locale={locale} />
       <Stack />
       <Footer />
     </main>
