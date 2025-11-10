@@ -1,6 +1,7 @@
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import matter from "gray-matter";
+import { cacheLife } from "next/cache";
 import { routing } from "@/i18n/routing";
 import { SITE_NAME, SITE_URL } from "@/lib/config";
 
@@ -75,6 +76,7 @@ function setCache<T>(key: CacheKey, value: T): void {
 
 export async function getAllPosts(locale: string, opts: { includeDraft?: boolean } = {}): Promise<PostMeta[]> {
   "use cache";
+  cacheLife("blog");
   const includeDraft = opts.includeDraft === true;
   const key = `all:${locale}:${includeDraft ? "with" : "no"}-draft` as const;
   const cached = getCache<PostMeta[]>(key);
@@ -119,6 +121,7 @@ export async function getPostBySlug(
   slug: string,
 ): Promise<{ data: Frontmatter; content: string } | null> {
   "use cache";
+  cacheLife("blog");
 
   const filePath = await resolveFilePathBySlug(locale, slug);
   if (!filePath) {
@@ -136,6 +139,7 @@ export async function getPostBySlug(
 
 export async function resolveFilePathBySlug(locale: string, slug: string): Promise<string | null> {
   "use cache";
+  cacheLife("blog");
   const dir = buildBlogDir(locale);
   let files: string[] = [];
   try {
@@ -171,6 +175,7 @@ export async function findPrevAndNext(
   next: { slug: string; title: string } | null;
 }> {
   "use cache";
+  cacheLife("blog");
   const posts = await getAllPosts(locale);
   const idx = posts.findIndex((p) => p.slug === currentSlug);
   if (idx === -1) {
@@ -184,6 +189,7 @@ export async function findPrevAndNext(
 
 export async function collectAllSlugs(): Promise<Set<string>> {
   "use cache";
+  cacheLife("blog");
   const slugs = new Set<string>();
   for (const locale of routing.locales) {
     const posts = await getAllPosts(locale);

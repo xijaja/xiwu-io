@@ -7,6 +7,7 @@ import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { MDXRemote } from "next-mdx-remote-client/rsc";
+import { Suspense } from "react";
 import { Link, routing } from "@/i18n/routing";
 import { findPrevAndNext, generateImageUrl, generateJsonLd, getPostBySlug } from "@/lib/blog";
 import { SITE_NAME, SITE_URL } from "@/lib/config";
@@ -82,18 +83,27 @@ type Props = {
   params: Promise<{ locale: string; slug: string }>;
 };
 
-export default async function BlogPage({ params }: Props) {
-  const { locale, slug } = await params;
-  if (!hasLocale(routing.locales, locale)) {
-    notFound();
-  }
-  setRequestLocale(locale);
+// 骨架屏组件
+function BlogSkeleton() {
+  return (
+    <section className="mx-auto my-16 max-w-4xl px-6 font-roboto-mono">
+      <div className="mb-6 h-10 w-3/4 animate-pulse rounded bg-gray-200 dark:bg-gray-700" />
+      <div className="mb-6 h-4 w-32 animate-pulse rounded bg-gray-200 dark:bg-gray-700" />
+      <div className="space-y-4">
+        <div className="h-4 w-full animate-pulse rounded bg-gray-200 dark:bg-gray-700" />
+        <div className="h-4 w-full animate-pulse rounded bg-gray-200 dark:bg-gray-700" />
+        <div className="h-4 w-2/3 animate-pulse rounded bg-gray-200 dark:bg-gray-700" />
+      </div>
+    </section>
+  );
+}
 
+// 博客内容组件
+async function BlogContent({ locale, slug }: { locale: string; slug: string }) {
   const postData = await getPostBySlug(locale, slug);
   if (!postData) {
     return null;
   }
-
   const { content, data } = postData;
   const { prev, next } = await findPrevAndNext(locale, slug);
   const pageSlug = typeof data?.slug === "string" && data.slug.trim().length > 0 ? String(data.slug) : slug;
@@ -105,7 +115,7 @@ export default async function BlogPage({ params }: Props) {
       <p className="mb-6 text-gray-500 text-sm">{data.date ? formatDate(locale, data.date) : ""}</p>
 
       {/* 当前文章的内容 */}
-      <div className="typography">
+      <div className="typography mx-auto max-w-4xl">
         <MDXRemote source={content} />
       </div>
 
@@ -126,6 +136,20 @@ export default async function BlogPage({ params }: Props) {
       {/* 结构化数据 */}
       <JsonLd data={jsonLd} />
     </section>
+  );
+}
+
+export default async function BlogPage({ params }: Props) {
+  const { locale, slug } = await params;
+  if (!hasLocale(routing.locales, locale)) {
+    notFound();
+  }
+  setRequestLocale(locale);
+
+  return (
+    <Suspense fallback={<BlogSkeleton />}>
+      <BlogContent locale={locale} slug={slug} />
+    </Suspense>
   );
 }
 

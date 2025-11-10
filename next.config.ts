@@ -8,6 +8,16 @@ const nextConfig: NextConfig = {
   // 缓存组件
   cacheComponents: true,
 
+  // 缓存生命周期配置
+  cacheLife: {
+    blog: {
+      // 开发环境使用 1 秒，生产环境使用 1 小时
+      stale: process.env.NODE_ENV === "development" ? 1 : 3600,
+      revalidate: process.env.NODE_ENV === "development" ? 1 : 3600,
+      expire: process.env.NODE_ENV === "development" ? 1 : 86400,
+    },
+  },
+
   // 优化输出
   output: "standalone",
 
